@@ -1,0 +1,6 @@
+.env
+.venv
+learning_notes.txt
+__pycache__/
+*.pyc
+first.py
