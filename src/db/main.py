@@ -1,16 +1,35 @@
-from sqlmodel import create_engine, text, SQLModel
-from sqlalchemy.ext.asyncio import AsyncEngine
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
+from sqlalchemy.orm import sessionmaker
+from sqlmodel import SQLModel
+from contextlib import asynccontextmanager
+from fastapi import FastAPI
 from src.config import Config
+# Barcha modellarni import qiling
+from src.books.models import *  # yoki alohida-alohida
 
-engine = AsyncEngine(
-    create_engine(
-    url=Config.DATABASE_URL,
+engine = create_async_engine(
+    Config.DATABASE_URL,
     echo=True
-))
+)
 
 async def init_db():
     async with engine.begin() as conn:
-        from src.books.models import Book
-
         await conn.run_sync(SQLModel.metadata.create_all)
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    await init_db()
+    yield
+
+app = FastAPI(lifespan=lifespan)
+
+
+async def get_session():
+    Session = sessionmaker(
+        bind=engine,
+        class_=AsyncSession,
+        expire_on_commit=False
+    )
+
+    async with Session() as session:
+        yield session
