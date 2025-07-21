@@ -9,7 +9,7 @@ class BookServices:
     async def get_all_books(self, session: AsyncSession):
         statement = select(Book).order_by(desc(Book.created_at))
 
-        result = await session.exce(statement)
+        result = await session.exec(statement)
 
         return result.all()
 

@@ -1,11 +1,11 @@
 from pydantic import BaseModel
 
-class Book(BaseModel):
+class BookModel(BaseModel):
     id: int
     title: str
     author: str
-    polisher: str
-    polished_date: str
+    publisher: str
+    published_date: str
     page_count: int
     language: str
 
@@ -13,8 +13,8 @@ class Book(BaseModel):
 class BookCreateModel(BaseModel):
     title: str
     author: str
-    polisher: str
-    polished_date: str
+    publisher: str
+    published_date: str
     page_count: int
     language: str
 
@@ -22,6 +22,6 @@ class BookCreateModel(BaseModel):
 class BookUpdateModel(BaseModel):
     title: str
     author: str
-    polisher: str
+    publisher: str
     page_count: int
     language: str
