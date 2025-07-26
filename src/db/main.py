@@ -1,11 +1,12 @@
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
+from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy.orm import sessionmaker
 from sqlmodel import SQLModel
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from src.config import Config
-# Barcha modellarni import qiling
-from src.books.models import *  # yoki alohida-alohida
+from src.books.models import *  
+from sqlmodel.ext.asyncio.session import AsyncSession
+
 
 engine = create_async_engine(
     Config.DATABASE_URL,

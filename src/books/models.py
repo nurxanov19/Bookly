@@ -8,7 +8,6 @@ class Book(SQLModel, table=True):
     uid: uuid.UUID = Field(
         sa_column= Column(
             pg.UUID,
-            nullable=True,
             primary_key=True,
             default=uuid.uuid4
         )
